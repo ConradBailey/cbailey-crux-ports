@@ -1,0 +1,16 @@
+# Description: Small program for generating a status bar. Patched to remove PulseAudio dependency
+# URL:         https://i3wm.org/i3status
+# Maintainer:  Conrad Bailey, conradbailey92 at gmail dot com
+# Depends on:  libconfuse yajl alsa-lib libnl libcap asciidoc
+
+name=i3status
+version=2.11
+release=1
+source=($name-$version-pulseaudio.patch https://i3wm.org/$name/$name-$version.tar.bz2)
+
+build () {
+	cd $name-$version
+	patch -p1 -i ../$name-$version-pulseaudio.patch
+	sed -e "/setcap/d" -i Makefile
+	make "$MAKEFLAGS" && make DESTDIR=$PKG install
+}

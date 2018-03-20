@@ -1,0 +1,29 @@
+# Description: High quality linear algebra library for the C++ language
+# URL:         http://arma.sourceforge.net/
+# Maintainer:  Conrad Bailey, conradbailey92 at gmail dot com
+# Depends on:  gcc-fortran openblas lapack superlu arpack cmake
+
+name=armadillo
+version=7.950.0
+release=2
+source=(http://sourceforge.net/projects/arma/files/$name-$version.tar.xz)
+
+build () {
+  cd "$name-$version"
+  mkdir build
+  cd build
+
+  cmake -DCMAKE_INSTALL_PREFIX="$PKG/usr" \
+        -DOpenBLAS_LIBRARY=/usr/lib/libopenblas.so \
+        -DARPACK_LIBRARY=/usr/lib/libarpack.so \
+        -DSuperLU_LIBRARY=/usr/lib/libsuperlu.so \
+        -DSuperLU_INCLUDE_DIR=/usr/include \
+        -DLAPACK_LIBRARY=/usr/lib/liblapack.so \
+				..
+
+  make "$MAKEFLAGS"
+  make install
+
+	mv $PKG/usr/lib64 $PKG/usr/lib
+	rm -r $PKG/usr/share
+}

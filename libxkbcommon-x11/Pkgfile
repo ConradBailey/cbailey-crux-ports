@@ -1,0 +1,21 @@
+# Description: libxkbcommon addon for XCB clients
+# URL:         http://xkbcommon.org
+# Maintainer:  Conrad Bailey, conradbailey92 at gmail dot com
+# Depends on:  libxkbcommon, xorg-libxcb
+
+name=libxkbcommon-x11
+version=0.7.1
+release=1
+source=(http://xkbcommon.org/download/libxkbcommon-$version.tar.xz)
+
+build () {
+  cd libxkbcommon-$version
+  ./configure --prefix=/usr --disable-docs
+  make "$MAKEFLAGS" DESTDIR=$PKG install
+  cd $PKG/usr/include/xkbcommon/
+  rm xkbcommon-compat.h xkbcommon-keysyms.h xkbcommon.h xkbcommon-compose.h xkbcommon-names.h
+  cd ../../lib
+  rm libxkbcommon.la libxkbcommon.so.0 libxkbcommon.a libxkbcommon.so libxkbcommon.so.0.0.0
+  cd pkgconfig
+  rm xkbcommon.pc
+}

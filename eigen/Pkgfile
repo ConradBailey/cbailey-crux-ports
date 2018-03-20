@@ -1,0 +1,21 @@
+# Description: Self-contained linear algebra library
+# URL:         http://eigen.tuxfamily.org
+# Maintainer:  Conrad Bailey, conradbailey92 at gmail dot com
+# Depends on:  cmake
+
+name=eigen
+version=3.3.4
+release=1
+source=(http://bitbucket.org/$name/$name/get/$version.tar.bz2)
+
+build () {
+  cd "$name-$name-"*
+  mkdir build
+  cd build
+
+  cmake \
+			-DCMAKE_INSTALL_PREFIX="$PKG\usr" \
+			..
+
+  make "$MAKEFLAGS" install
+}

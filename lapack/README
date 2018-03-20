@@ -1,0 +1,4 @@
+If OpenBLAS is not installed then LAPACK will compile with the
+non-optimized netlib implementation of BLAS. To use a different BLAS
+implementation just change the -DBLAS_LIBRARIES location in the
+Pkgfile.

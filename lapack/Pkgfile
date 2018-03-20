@@ -1,0 +1,28 @@
+# Description: Library with subroutines for solving the most commonly occurring problems in numerical linear algebra
+# URL:         http://netlib.org/lapack/
+# Maintainer:  Conrad Bailey, conradbailey92 at gmail dot com
+# Depends on:  gcc-fortran openblas cmake
+
+name=lapack
+version=3.7.1
+release=1
+source=(http://www.netlib.org/$name/$name-$version.tgz)
+
+build () {
+	cd $name-$version
+	mkdir build
+	cd build
+
+	cmake -DCMAKE_INSTALL_PREFIX="$PKG/usr" \
+				-DLAPACKE=ON \
+				-DCMAKE_Fortran_COMPILER=gfortran \
+				-DUSE_OPTIMIZED_BLAS=ON \
+				-DBLAS_LIBRARIES=/usr/lib/libopenblas.so \
+				-DBUILD_SHARED_LIBS=ON \
+				-DCMAKE_POSITION_INDEPENDENT_CODE=ON \
+				..
+
+	make "$MAKEFLAGS"
+	make install
+	mv "$PKG/usr/lib64" "$PKG/usr/lib"
+}

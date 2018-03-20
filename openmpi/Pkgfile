@@ -1,0 +1,16 @@
+# Description: Open source Message Passing Interface implementation that is developed and maintained by a consortium of academic, research, and industry partners
+# URL:         https://www.open-mpi.org
+# Maintainer:  Conrad Bailey, conradbailey92 at gmail dot com
+# Depends on:
+
+name=openmpi
+version=2.1.1
+release=1
+source=(https://www.open-mpi.org/software/ompi/v2.1/downloads/$name-$version.tar.bz2)
+
+build () {
+  cd "$name-$version"
+  ./configure --prefix="$PKG/usr"
+  make "$MAKEFLAGS"
+  make install
+}

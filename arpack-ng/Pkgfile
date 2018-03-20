@@ -1,0 +1,32 @@
+# Description: Collection of subroutines designed to solve large scale eigenvalue problems
+# URL:         https://github.com/opencollab/arpack-ng
+# Maintainer:  Conrad Bailey, conradbailey92 at gmail dot com
+# Depends on:  openblas lapack gcc-fortran cmake
+
+name=arpack-ng
+version=3.5.0
+release=1
+source=(https://github.com/opencollab/$name/archive/$version.tar.gz)
+
+build () {
+  cd "$name-$version"
+  mkdir build
+  cd build
+
+  sed -r -i'' 's/^#(add_library\(arpack\s+SHARED\s*)$/\1/' ../CMakeLists.txt
+  sed -r -i'' 's/^#(\s*\$\{arpackblas_STAT_SRCS\}\s*)$/\1/' ../CMakeLists.txt
+  sed -r -i'' 's/^#(\s*\$\{arpacklapack_STAT_SRCS\}\s*)$/\1/' ../CMakeLists.txt
+  sed -r -i'' 's/^(\s*add_library\(arpack\s*)$/#\1/' ../CMakeLists.txt
+
+  cmake -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
+        -DBUILD_SHARED_LIBS=ON \
+        -DBLAS_LIBRARIES=/usr/lib/libopenblas.so \
+        -DLAPACK_LIBRARIES=/usr/lib/liblapack.so \
+				..
+
+  make "$MAKEFLAGS"
+
+	mkdir $PKG/usr
+  cp -r lib $PKG/usr
+}
+

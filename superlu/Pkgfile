@@ -1,0 +1,25 @@
+# Description: General purpose library for the direct solution of large, sparse, nonsymmetric systems of linear equations
+# URL:         http://crd-legacy.lbl.gov/~xiaoye/SuperLU/
+# Maintainer:  Conrad Bailey, conradbailey92 at gmail dot com
+# Depends on:  openblas cmake
+
+name=superlu
+version=5.2.1
+release=1
+source=(http://crd-legacy.lbl.gov/~xiaoye/SuperLU/${name}_$version.tar.gz)
+
+build () {
+	cd "SuperLU_$version"
+	mkdir build
+	cd build
+
+	cmake -DCMAKE_INSTALL_PREFIX="$PKG\usr" \
+				-Denable_blaslib=OFF \
+				-DBLAS_LIBRARIES=/usr/lib/libopenblas.so \
+				-DBUILD_SHARED_LIBS=ON \
+				..
+
+	make "$MAKEFLAGS"
+	make install
+	mv $PKG/usr/lib64 $PKG/usr/lib
+}

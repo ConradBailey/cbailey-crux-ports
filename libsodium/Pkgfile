@@ -1,0 +1,17 @@
+# Description: Sodium is a modern, easy-to-use software library for encryption, decryption, signatures, password hashing and more.
+# URL:         https://download.libsodium.org/doc/
+# Maintainer:  Conrad Bailey, conradbailey92 at gmail dot com
+# Depends on:
+
+name=libsodium
+version=1.0.16
+release=1
+source=(https://github.com/jedisct1/$name/releases/download/$version/$name-$version.tar.gz)
+
+build () {
+  cd $name-$version
+  ./configure --prefix=/usr --libexecdir=/usr/lib
+  make "$MAKEFLAGS"
+	make check
+  make DESTDIR=$PKG install
+}

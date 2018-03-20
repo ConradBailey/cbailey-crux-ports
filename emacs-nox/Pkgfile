@@ -1,0 +1,22 @@
+# Description: GNU Extensible Text Editor - Minimized and without X
+# URL:         https://www.gnu.org/software/emacs
+# Maintainer:  Conrad Bailey, conradbailey92 at gmail dot com
+# Depends on:
+
+name=emacs-nox
+version=25.3
+release=1
+source=(http://ftp.gnu.org/gnu/emacs/emacs-$version.tar.xz)
+
+build () {
+  cd emacs-$version
+  ./configure --prefix=/usr --with-x=no --without-all --without-makeinfo --with-xml2 --with-xft --libexecdir=/usr/lib
+  make "$MAKEFLAGS"
+  make DESTDIR=$PKG install
+  cd $PKG/
+  rm -r usr/share/info
+  rm -r usr/share/icons
+  rm -r usr/share/applications
+  rm -r usr/share/emacs/$version/etc/images
+  rm -r usr/var
+}

@@ -1,0 +1,21 @@
+# Description: An emulator for running Game Boy Advance games.
+# URL:         https://mgba.io/
+# Maintainer:  Conrad Bailey, conradbailey92 at gmail dot com
+# Depends on:  cmake libsdl2
+
+name=mgba-sdl2
+version=0.6.1
+release=1
+source=(https://github.com/mgba-emu/mgba/archive/$version.tar.gz)
+
+build () {
+  cd "mgba-$version"
+  mkdir build
+  cd build
+
+  cmake -DCMAKE_INSTALL_PREFIX="$PKG/usr" ..
+
+  make "$MAKEFLAGS"
+  make install
+	rm -r $PKG/usr/share/doc
+}

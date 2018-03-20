@@ -1,0 +1,56 @@
+# Description: General purpose library for the direct solution of large, sparse, nonsymmetric systems of linear equations
+# URL:         https://bitbucket.org/icl/plasma/
+# Maintainer:  Conrad Bailey, conradbailey92 at gmail dot com
+# Depends on:  gcc-fortran lapack openblas
+
+name=plasma
+version=3bd97977c3cf
+release=1
+source=(https://bitbucket.org/icl/$name/get/$version.zip)
+
+build () {
+  cd "icl-$name-$version"
+
+  cat > make.inc <<EOF
+  # PLASMA make.inc template, processed by configure.py
+  #
+  # PLASMA is a software package provided by:
+  # University of Tennessee, US,
+  # University of Manchester, UK.
+
+  # ------------------------------------------------------------------------------
+  # programs and flags
+
+  CC       = gcc
+  FC       = gfortran
+  RANLIB   = ranlib
+  AR       = ar
+
+  # Use -fPIC to make shared (.so) and static (.a) libraries;
+  # can be commented out if making only static libraries.
+  FPIC     = -fPIC
+
+  CFLAGS   = ${FPIC} -std=c99 -fopenmp -DHAVE_OPENMP_DEPEND -DHAVE_OPENMP_PRIORITY -DHAVE_OPENMP_DEPEND -DHAVE_OPENBLAS -DHAVE_LAPACKE_DLASCL -DHAVE_LAPACKE_DLANTR -DHAVE_LAPACKE_DLASSQ
+  FCFLAGS  = ${FPIC} -std=f2008 -fopenmp
+  LDFLAGS  = ${FPIC}  -fopenmp
+  LIBS     = -llapacke -llapack -lopenblas -lm
+
+  # Enable or disable compiling Fortran 2008 interfaces into PLASMA library
+  # 0 - disabled
+  # 1 - enabled; build Fortran interfaces and examples
+  fortran ?= 1
+
+  # where to install PLASMA
+  prefix ?= $PKG/usr
+
+  # one of: aix bsd c89 freebsd generic linux macosx mingw posix solaris
+  # usually generic is fine
+  lua_platform ?= generic
+EOF
+
+  chmod +x tools/codegen.py
+  make "$MAKEFLAGS"
+
+  sed -i 's%cp include/\*.mod%#cp include/\*.mod%g' Makefile
+  make install
+}

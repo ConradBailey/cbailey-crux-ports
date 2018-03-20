@@ -1,0 +1,15 @@
+There are optional features which may require one of these other
+utilities:
+  - SuperLU
+  - MPFR C++
+  - Cholmod
+  - UmfPack
+  - PaStiX
+  - METIS
+  - SPQR
+  - Qt4 support
+  - Boost.Multiprecision
+  - GoogleHash
+  - Adolc
+  - fftw
+  - OpenGL

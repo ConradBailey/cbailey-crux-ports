@@ -1,0 +1,18 @@
+# Description: Optimized BLAS library without OpenMP parallelization
+# URL:         http://www.openblas.net/
+# Maintainer:  Conrad Bailey, conradbailey92 at gmail dot com
+# Depends on:  gcc-fortran
+
+
+name=OpenBLAS
+version=0.2.19
+release=1
+source=(http://github.com/xianyi/$name/archive/v$version.tar.gz)
+
+build () {
+  cd $name-$version
+
+	make "$MAKEFLAGS" FC=gfortran NO_LAPACK=1 USE_OPENMP=0
+	make PREFIX=$PKG/usr install
+	rm $PKG/usr/include/lapacke*
+}

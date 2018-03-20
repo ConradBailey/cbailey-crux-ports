@@ -1,0 +1,16 @@
+# Description: Open-source, header-only, high-performance C++ math library for dense and sparse arithmetic
+# URL:         https://bitbucket.org/blaze-lib/blaze
+# Maintainer:  Conrad Bailey, conradbailey92 at gmail dot com
+# Depends on:
+
+name=blaze
+version=3.1
+release=1
+source=(https://bitbucket.org/blaze-lib/$name/downloads/$name-$version.tar.gz)
+
+build () {
+	cd "$name-$version"
+	mkdir -p "$PKG/usr/include"
+  cp -r blaze "$PKG/usr/include"
+}
+

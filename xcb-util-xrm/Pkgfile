@@ -1,0 +1,14 @@
+# Description: XCB utility functions for the X resources manager
+# URL:         https://github.com/Airblader/xcb-util-xrm
+# Maintainer:  Conrad Bailey, conradbailey92 at gmail dot com
+
+name=xcb-util-xrm
+version=1.2
+release=1
+source=(https://github.com/Airblader/xcb-util-xrm/releases/download/v$version/$name-$version.tar.bz2)
+
+build () {
+  cd $name-$version
+  ./configure --prefix=/usr
+  make "$MAKEFLAGS" DESTDIR=$PKG install
+}

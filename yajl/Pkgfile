@@ -1,0 +1,15 @@
+# Description: Small event-driven (SAX-style) JSON parser written in ANSI C and  a small validating JSON generator
+# URL:         http://lloyd.github.io/yajl
+# Maintainer:  Conrad Bailey, conradbailey92 at gmail dot com
+
+name=yajl
+version=2.1.0
+release=1
+source=(https://github.com/lloyd/yajl/archive/2.1.0.tar.gz)
+
+build () {
+  cd $name-$version
+  mkdir build && cd build
+  cmake -DCMAKE_INSTALL_PREFIX=/usr ..
+  make "$MAKEFLAGS" DESTDIR=$PKG install
+}

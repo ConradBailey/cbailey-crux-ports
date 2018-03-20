@@ -1,0 +1,14 @@
+# Description: The standard unix password manager
+# URL:         https://www.passwordstore.org/
+# Maintainer:  Conrad Bailey, conradbailey92 at gmail dot com
+# Depends on:  gnupg tree xclip
+
+name=pass
+version=1.7.1
+release=1
+source=(https://git.zx2c4.com/password-store/snapshot/password-store-1.7.1.tar.xz)
+
+build () {
+  cd password-store-$version
+  make "$MAKEFLAGS" DESTDIR=$PKG install
+}

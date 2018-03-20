@@ -1,0 +1,22 @@
+# Description: Versatile implementation of the Prolog language
+# URL:         http://www.swi-prolog.org/
+# Maintainer:  Conrad Bailey, conradbailey92 at gmail dot com
+# Depends on:  gcc make autoconf libgmp readline libunwind
+
+name=swipl
+version=7.4.2
+release=1
+source=(http://www.swi-prolog.org/download/stable/src/swipl-$version.tar.gz)
+
+build () {
+  cd "$name-$version/src"
+  ./configure --prefix="$PKG/usr"
+  make "$MAKEFLAGS"
+  make install
+
+  cd ../packages/readline
+	PATH="$PATH:$PKG/usr/bin/"
+  ./configure --prefix="$PKG/usr"
+  make "$MAKEFLAGS"
+  make install
+}

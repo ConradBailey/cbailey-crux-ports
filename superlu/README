@@ -1,0 +1,2 @@
+To use a different BLAS implementation (e.g. Intel MKL) just change
+the -DBLAS_LIBRARIES location in the Pkgfile

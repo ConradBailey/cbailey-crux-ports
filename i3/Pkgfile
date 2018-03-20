@@ -1,0 +1,18 @@
+# Description: Tiling window-manager
+# URL:         https://i3wm.org
+# Maintainer:  Conrad Bailey, conradbailey92 at gmail dot com
+# Depends on:  pkg-config xorg-libxcb xorg-xcb-util xorg-xcb-util-cursor libxkbcommon-x11 libxkbcommon xorg-xcb-util-wm xorg-xcb-util-keysyms libev yajl libpcre startup-notification pango cairo
+
+name=i3
+version=4.13
+release=1
+source=(https://i3wm.org/downloads/$name-$version.tar.bz2)
+
+build () {
+	cd $name-$version
+	sed -e '/AC_PATH_PROG(\[PATH_ASCIIDOC/d' -i configure.ac
+	autoreconf -fi
+	mkdir build && cd build
+	../configure --prefix=/usr --enable-debug=no
+	make "$MAKEFLAGS" DESTDIR=$PKG install
+}
