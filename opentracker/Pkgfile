@@ -1,0 +1,21 @@
+# Description: A open and free bittorrent tracker project
+# URL:         https://erdgeist.org/arts/software/opentracker/
+# Maintainer:  Conrad Bailey, conradbailey92 at gmail dot com
+# Depends on:  git
+
+name=opentracker-git
+version=1
+release=1
+source=(https://www.fefe.de/libowfat/libowfat-0.31.tar.xz)
+
+build () {
+	git clone git://erdgeist.org/opentracker
+	cd libowfat-0.31
+	make "$MAKEFLAGS"
+	cd ..
+	cd opentracker
+	export CPATH="$CPATH":../libowfat-0.31/
+	export LIBRARY_PATH="$LIBRARY_PATH":../libowfat-0.31/
+	make "$MAKEFLAGS"
+	install -D opentracker $PKG/usr/bin/opentracker
+}
