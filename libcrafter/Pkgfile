@@ -1,0 +1,17 @@
+# Description: A high level library for C++ designed to make easier the creation and decoding of network packets.
+# URL:         https://code.google.com/archive/p/libcrafter/
+# Maintainer:  Conrad Bailey, conradbailey92 at gmail dot com
+# Depends on:	 libcap autoconf libtool
+
+name=libcrafter
+version=0.3
+release=1
+source=(https://github.com/pellegre/libcrafter/archive/version-0.3.tar.gz)
+
+build () {
+  cd $name-version-$version/$name
+	./autogen.sh
+  ./configure --prefix=/usr
+  make "$MAKEFLAGS"
+  make DESTDIR=$PKG install
+}
