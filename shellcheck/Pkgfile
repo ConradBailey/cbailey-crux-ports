@@ -1,0 +1,14 @@
+# Description: a tool that gives warnings and suggestions for bash/sh shell scripts:
+# URL:         https://www.shellcheck.net/
+# Maintainer:  Conrad Bailey, conradbailey92 at gmail dot com
+# Depends on:
+
+name=shellcheck
+version=0.4.7
+release=1
+source=(https://storage.googleapis.com/shellcheck/shellcheck-stable.linux.x86_64.tar.xz)
+
+build () {
+  cd shellcheck-stable
+	install -D -t $PKG/usr/bin/ shellcheck
+}
