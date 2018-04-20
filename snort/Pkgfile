@@ -1,0 +1,17 @@
+# Description: An open source intrusion prevention system capable of real-time traffic analysis and packet logging
+# URL:         https://www.snort.org
+# Maintainer:  Conrad Bailey, conradbailey92 at gmail dot com
+# Depends on:	 daq libdnet
+
+name=snort
+version=2.9.11.1
+release=1
+source=(https://www.snort.org/downloads/snort/$name-$version.tar.gz)
+
+build () {
+  cd $name-$version
+  ./configure --prefix=/usr --libexecdir=/usr/lib --enable-sourcefire --disable-nls
+  make "$MAKEFLAGS"
+  make DESTDIR=$PKG install
+	rm -r $PKG/usr/share/doc
+}
